@@ -1,8 +1,10 @@
 package com.company.eduservice.controller;
 
 
+import com.company.common.Result;
 import com.company.eduservice.entity.EduTeacher;
 import com.company.eduservice.service.EduTeacherService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +29,11 @@ public class EduTeacherController {
      * 查询所有讲师
      * @return
      */
+    @ApiOperation("查询所有讲师")
     @GetMapping("/findAllTeacher")
-    public List<EduTeacher> findAllTeacher() {
-        return eduTeacherService.list(null);
+    public Result findAllTeacher() {
+        List<EduTeacher> eduTeacherList = eduTeacherService.list(null);
+        return Result.ok().data("item", eduTeacherList);
     }
 
     /**
@@ -37,9 +41,15 @@ public class EduTeacherController {
      * @param id
      * @return
      */
+    @ApiOperation("根据id删除讲师信息")
     @DeleteMapping("/removeTeacherById/{id}")
-    public boolean removeTeacherById(@PathVariable String id) {
-        return eduTeacherService.removeById(id);
+    public Result removeTeacherById(@PathVariable String id) {
+        boolean res = eduTeacherService.removeById(id);
+        if (res) {
+            return Result.ok();
+        } else {
+            return Result.error();
+        }
     }
 }
 
