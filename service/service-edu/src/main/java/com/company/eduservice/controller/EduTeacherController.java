@@ -9,13 +9,8 @@ import com.company.eduservice.service.EduTeacherService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.lang.model.element.VariableElement;
 import java.util.List;
 
 /**
@@ -72,6 +67,36 @@ public class EduTeacherController {
         List<EduTeacher> eduTeacherList = pageParams.getRecords();
         long total = pageParams.getTotal();
         return Result.ok().data("total", total).data("rows", eduTeacherList);
+    }
+
+    @ApiOperation("新增讲师")
+    @PostMapping("/addEduTeacher")
+    public Result addEduTeacher(
+            @ApiParam(name = "teacher", value = "讲师对象", required = true)
+            @RequestBody EduTeacher eduTeacher) {
+        eduTeacherService.save(eduTeacher);
+        return Result.ok();
+    }
+
+    @ApiOperation("根据id查询讲师信息")
+    @GetMapping("/findTeacherById/{id}")
+    public Result findTeacherById(
+            @ApiParam(name = "id", value = "讲师id", required = true)
+            @PathVariable String id) {
+        EduTeacher eduTeacher = eduTeacherService.getById(id);
+        return Result.ok().data("item", eduTeacher);
+    }
+
+    @ApiOperation("根据id更新讲师信息")
+    @PostMapping("/updateTeacherById/{id}")
+    public Result updateTeacherById(
+            @ApiParam(name = "id", value = "讲师id", required = true)
+            @PathVariable String id,
+            @ApiParam(name = "eduTeacher", value = "讲师信息", required = true)
+            @RequestBody EduTeacher eduTeacher) {
+        eduTeacher.setId(id);
+        eduTeacherService.updateById(eduTeacher);
+        return Result.ok();
     }
 }
 
