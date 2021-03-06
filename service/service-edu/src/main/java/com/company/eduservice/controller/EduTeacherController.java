@@ -6,8 +6,10 @@ import com.company.common.Result;
 import com.company.eduservice.entity.EduTeacher;
 import com.company.eduservice.entity.query.EduTeacherQueryVO;
 import com.company.eduservice.service.EduTeacherService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,7 @@ import java.util.List;
  * @author yaochunguang
  * @since 2021-02-27
  */
+@Api(tags = "讲师")
 @RestController
 @RequestMapping("/eduservice/edu-teacher")
 public class EduTeacherController {
